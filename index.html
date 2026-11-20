@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MeshView — STL / OBJ viewer</title>
+<meta name="description" content="Drop several STL / OBJ files and inspect them in a CAD-style 3D viewer, with motion envelopes.">
+<meta name="theme-color" content="#2f6fed">
+<!--PWA-->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<!--/PWA-->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <button class="ib" id="btnLeft" title="Project tree" aria-label="Toggle project tree"></button>
+    <div class="brand"><span class="logo" id="logo"></span><span class="bt">MeshView</span><small id="ver"></small></div>
+    <div class="spacer"></div>
+    <button class="ib" id="btnSave" title="Save project (.json, Ctrl+S)" aria-label="Save project"></button>
+    <button class="ib" id="btnUndo" title="Undo (Ctrl+Z)" aria-label="Undo"></button>
+    <button class="ib" id="btnRedo" title="Redo (Ctrl+Y)" aria-label="Redo"></button>
+    <button class="ib" id="btnSettings" title="Settings" aria-label="Settings"></button>
+    <button class="ib" id="btnTheme" title="Toggle dark theme" aria-label="Toggle theme"></button>
+    <button class="ib hidden" id="btnInstall" title="Install the app" aria-label="Install"></button>
+    <button class="ib" id="btnRight" title="Properties" aria-label="Toggle properties"></button>
+  </header>
+
+  <div id="body">
+    <aside class="drawer left" id="dLeft">
+      <div class="dhead"><span class="t">Project</span><button class="ib" id="btnOpen2" title="Browse for STL / OBJ files or a .json project" aria-label="Open files"></button><button class="ib" id="btnClear" title="Remove everything" aria-label="Clear project"></button></div>
+      <div class="dbody" id="tree"></div>
+      <div class="rsz" data-var="lw"></div>
+    </aside>
+
+    <main id="main">
+      <div id="viewport">
+        <canvas id="gl" tabindex="0"></canvas>
+        <svg id="overlay"></svg>
+        <div id="labels"></div>
+        <div id="vtools"></div>
+        <svg id="triad" viewBox="0 0 92 92"></svg>
+        <div id="toolwin" class="hidden"></div>
+        <div id="matLegend" class="hidden"></div>
+        <div id="dropHint"><div class="box">Drop .stl / .obj files — or a saved .json project — here<small>several files at once are fine — or click to browse</small></div></div>
+        <div id="status"><div class="chipx" id="statusChip">Ready</div></div>
+        <div id="resPop" class="hidden"></div>
+        <div id="pickPop" class="hidden"></div>
+        <div id="loadBox" class="hidden"><div class="lb"><div class="lt" id="lbT">Loading</div><div class="ls" id="lbS"></div><div class="bar"><div id="lbBar"></div></div></div></div>
+      </div>
+    </main>
+
+    <aside class="drawer dock closed" id="dDock"><div class="rsz" data-var="dw"></div></aside>
+
+    <aside class="drawer right" id="dRight">
+      <div class="dhead"><span class="t">Properties</span></div>
+      <div class="dbody" id="props"></div>
+      <div class="rsz" data-var="rw"></div>
+    </aside>
+    <div id="scrim"></div>
+  </div>
+</div>
+
+<input type="file" id="fileIn" accept=".stl,.obj,.json" multiple hidden>
+<div id="toasts"></div>
+<dialog id="dlg"></dialog>
+
+<!--THREE--><script src="js/vendor/three.min.js"></script><!--/THREE-->
+<!--JS-->
+<script src="js/core.js"></script>
+<script src="js/geom.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/viewer.js"></script>
+<script src="js/pick.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+<!--/JS-->
+</body>
+</html>
